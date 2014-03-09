@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,10 +25,18 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        //Should Do a http request to get the names from the online database
         loadNames();
+        //When generating list must remeber to get the number of adds per list view by using a http request
         generateListView();
 
     }
+
+    /*
+    * Action Bar Functions
+    * initiating the action bar (onCreateOptionsMenu)
+    * Controlling response when input is received (onOptionsItemSelected)
+    * */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -36,17 +45,50 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()){
+            //About
+            case R.id.action_about:
+                break;
+            //Settings
+            case R.id.action_settings:
+                break;
+            //Help
+            case R.id.action_help:
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+    /*
+    * Load Names
+    * Fill the array Names with the names of the added contact list
+    * those names will show up in the list view
+    * Add the word "add" in the list to show admob adds in the list
+    * */
     private void loadNames(){
         Names = getResources().getStringArray(R.array.sample_names);
     }
-
+    /*
+    * Generate List View
+    * This will Create the List View Using the ListAdapter(Custom Class Defined below)
+    * */
     private void generateListView(){
         list = (ListView) findViewById(R.id.list);
         ListAdapter adapter = new ListAdapter(this);
         list.setAdapter(adapter);
     }
 
+    /*ListAdapter
+    * Extends Base Adapter
+    * Get View function returns the
+    * row(View) which will be the #(i)th View
+    * in the list
+    * */
     private class ListAdapter extends BaseAdapter{
         private LayoutInflater li;
         public ListAdapter(Context context){
@@ -92,7 +134,11 @@ public class MainActivity extends ActionBarActivity {
             return row;
         }
     }
-
+    /*View Holder Class
+    * To Hold the TextView
+    * and the Image View
+    * Which will be referred to later
+    * when filling the list view with data*/
     static class ViewHolder{
         public TextView text;
         public ImageView image;
